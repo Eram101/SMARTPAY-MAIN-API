@@ -1,142 +1,183 @@
-# SmartPay API Documentation
+SmartPay API Documentation
 
-![SmartPay Logo](https://via.placeholder.com/150x50?text=SmartPay)  
-**Seamless M-Pesa Integration for Your Applications**
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Getting Started](#getting-started)
-- [API Endpoints](#api-endpoints)
-- [Error Codes](#error-codes)
-- [Supported Banks](#supported-banks)
-- [Best Practices](#best-practices)
-- [Contributing](#contributing)
-- [License](#license)
 
-## Introduction
-SmartPay is a payment service that enables you to collect payments through M-Pesa STK Push directly to your M-Pesa till number, paybill number, or connected bank account. This API provides developers with tools to integrate M-Pesa payments into their applications.
+A comprehensive documentation for the SmartPay API that enables M-Pesa STK Push payments integration in your applications.
 
-Key Features:
-- STK Push payments
-- Account balance checking
-- Transaction status verification
-- Webhook callbacks
-- Comprehensive error handling
+Features
 
-## Getting Started
+STK Push Integration - Initiate M-Pesa payments via push notifications
 
-### Prerequisites
-- SmartPay merchant account
-- API key (obtained from your SmartPay dashboard)
-- Basic understanding of REST APIs and JSON
+Transaction Status - Check the status of initiated transactions
 
-### Authentication
-All API requests must include your API key in the Authorization header:
+Account Balance - Retrieve account information including current balance
 
-```http
-Authorization: Bearer your_api_key_here
-Sandbox Testing
-Use our sandbox environment for testing:
+Webhook Support - Configure callback URLs for real-time payment notifications
 
-Base URL: https://sandbox.smartpay.co.ke/api/v1
+Error Handling - Detailed error codes and descriptions
 
-Test phone numbers: 254708374149, 254712345678
+Supported Banks - List of all supported banks and paybill numbers
 
 API Endpoints
-1. Initiate STK Push
-Initiate M-Pesa payments via STK Push.
 
-Endpoint: POST /v1/initiatestk
+Endpoint
 
-Request Example:
+Method
 
-json
+Description
+
+/v1/initiatestk
+
+POST
+
+Initiate STK Push payment
+
+/v1/initiatebalance
+
+POST
+
+Check account balance and info
+
+/v1/transactionstatus
+
+POST
+
+Check transaction status
+
+Getting Started
+
+Prerequisites
+
+PHP 7.2 or higher
+
+MySQL database
+
+Web server (Apache/Nginx)
+
+SmartPay API credentials
+
+Installation
+
+Clone the repository:
+
+git clone https://github.com/ERAM101/SMARTPAY-MAIN-API.git
+
+Configure the database:
+
+Import the SQL schema from database.sql
+
+Update database credentials in server.php
+
+Set up API configuration:
+
+Update API credentials in secure_config.php
+
+Deploy to your web server
+
+Authentication
+
+All API requests require authentication via API key in the Authorization header:
+
+Authorization: Bearer your_api_key_here
+
+Usage Examples
+
+Initiate STK Push
+
+POST /v1/initiatestk HTTP/1.1
+Host: api.smartpay.co.ke
+Content-Type: application/json
+Authorization: Bearer your_api_key_here
+
 {
   "phone": "254712345678",
   "amount": 150,
-  "account_reference": "ORDER_101",
-  "description": "Payment for services"
+  "account_reference": "NETON_101",
+  "description": "Payment for SmartPlan"
 }
-Response Example:
 
-json
-{
-  "success": true,
-  "message": "STK Push initiated successfully",
-  "checkoutRequestID": "ws_CO_16062025160832822727856009",
-  "merchantRequestID": "aea5-4f44-b4a1-d9044446ee461957335"
-}
-2. Check Account Balance
-Retrieve your account balance information.
+Check Account Balance
 
-Endpoint: POST /v1/initiatebalance
+POST /v1/initiatebalance HTTP/1.1
+Host: api.smartpay.co.ke
+Content-Type: application/json
+Authorization: Bearer your_api_key_here
 
-Request Example:
-
-json
 {
   "phone": "254712345678",
   "account_reference": "BALANCE"
 }
-3. Transaction Status
-Check the status of a transaction.
 
-Endpoint: POST /v1/transactionstatus
+Check Transaction Status
 
-Request Example:
+POST /v1/transactionstatus HTTP/1.1
+Host: api.smartpay.co.ke
+Content-Type: application/json
+Authorization: Bearer your_api_key_here
 
-json
 {
   "CheckoutRequestID": "ws_CO_17062025005554749727856009"
 }
-Error Codes
-Code	Description
-0	Success
-1	Insufficient balance
-1032	Request cancelled by user
-1037	User cannot be reached (timeout)
-2001	Invalid initiator information
-Full error code list available in the documentation.
+
+Response Codes
+
+Code
+
+Description
+
+0
+
+Success
+
+1
+
+Insufficient balance
+
+1032
+
+Request cancelled by user
+
+1037
+
+User cannot be reached
+
+1025
+
+Push request error
+
+9999
+
+General error
+
+2001
+
+Invalid initiator info
+
+1019
+
+Transaction expired
+
+1001
+
+Transaction in progress
 
 Supported Banks
-SmartPay supports integration with over 30 Kenyan banks including:
+
+SmartPay supports integration with all major Kenyan banks including:
 
 Equity Bank (247247)
 
-KCB (522522)
+KCB (522522/522533)
 
-Co-operative Bank (400200)
+Co-operative Bank (400200/400222)
 
 Standard Chartered (329329)
 
-Absa Bank (303030)
-
-View full list of supported banks
-
-Best Practices
-Security
-Always use HTTPS
-
-Never expose API keys in client-side code
-
-Implement IP whitelisting
-
-Performance
-Use webhooks instead of polling
-
-Implement proper error handling
-
-Cache frequently accessed data
-
-Testing
-Start with small amounts
-
-Verify callback URL functionality
-
-Test all error scenarios
+And many more (see full list in documentation)
 
 Contributing
-We welcome contributions to the SmartPay API. Please follow these steps:
+
+Contributions are welcome! Please follow these steps:
 
 Fork the repository
 
@@ -149,29 +190,24 @@ Push to the branch (git push origin feature/AmazingFeature)
 Open a Pull Request
 
 License
+
 Distributed under the MIT License. See LICENSE for more information.
 
-Support
-For technical support, please contact:
+Contact
+
+For support or inquiries:
 
 Email: support@smartpay.co.ke
 
 Phone: +254 700 000000
 
-View Full Documentation | Get API Key | GitHub Repository
+Website: https://smartpay.co.ke
 
-text
+Acknowledgments
 
-This README includes:
+M-Pesa API Documentation
 
-1. **Clear structure** with table of contents
-2. **Concise overview** of the API's purpose and features
-3. **Getting started** section with prerequisites
-4. **API endpoint** documentation with examples
-5. **Error code** reference
-6. **Best practices** for implementation
-7. **Contribution guidelines**
-8. **License information**
-9. **Support contacts**
+Highlight.js for code syntax highlighting
 
-The markdown is formatted for easy reading on GitHub and other platforms that support Markdown rendering. You can customize the placeholder logo, support contacts, and other specific details as needed.
+Inter Font for typography
+
